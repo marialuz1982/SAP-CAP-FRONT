@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="ZOS_ACADEMIA_BIBLIOTECA_CAP_SRV" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="SocioSet" EntityType="ZOS_ACADEMIA_BIBLIOTECA_CAP_SRV.SocioSet">
+                    <NavigationPropertyBinding Path="To_Libros" Target="LibroSet"/>
+                </EntitySet>
+                <EntitySet Name="LibroSet" EntityType="ZOS_ACADEMIA_BIBLIOTECA_CAP_SRV.LibroSet">
+                    <NavigationPropertyBinding Path="To_Socio" Target="SocioSet"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="SocioSet">
+                <Key>
+                    <PropertyRef Name="Dni"/>
+                </Key>
+                <Property Name="Dni" Type="Edm.String" Nullable="false"/>
+                <Property Name="Nombre" Type="Edm.String"/>
+                <Property Name="Direccion" Type="Edm.String"/>
+                <Property Name="Telefono" Type="Edm.String"/>
+                <NavigationProperty Name="To_Libros" Type="Collection(ZOS_ACADEMIA_BIBLIOTECA_CAP_SRV.LibroSet)"/>
+            </EntityType>
+            <EntityType Name="LibroSet">
+                <Key>
+                    <PropertyRef Name="Dni"/>
+                    <PropertyRef Name="Isbn"/>
+                </Key>
+                <Property Name="Dni" Type="Edm.String" Nullable="false"/>
+                <Property Name="Isbn" Type="Edm.String" Nullable="false"/>
+                <Property Name="Titulo" Type="Edm.String"/>
+                <Property Name="FechaPrest" Type="Edm.String"/>
+                <NavigationProperty Name="To_Socio" Type="ZOS_ACADEMIA_BIBLIOTECA_CAP_SRV.SocioSet">
+                    <ReferentialConstraint Property="To_Socio_Dni" ReferencedProperty="Dni"/>
+                </NavigationProperty>
+                <Property Name="To_Socio_Dni" Type="Edm.String"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
